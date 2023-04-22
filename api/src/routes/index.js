@@ -58,7 +58,6 @@ const getAllPokemons = async () => {
 };
 
 router.get("/pokemons", async (req, res) => {
-  // ¿pokemonS o pokemoN?
   const name = req.query.name; // Busca nombre por Query
   let pokemonsTotal = await getAllPokemons();
   if (name) {
@@ -70,6 +69,35 @@ router.get("/pokemons", async (req, res) => {
       : res.status(404).send("Sorry, that Pokemon does not exist"); // Pokemon no existe
   } else {
     res.status(200).send(pokemonsTotal); // Todos
+  }
+});
+
+// ---------------------------------------- POST -----------------------------
+
+router.post("/pokemons", async (req, res) => {});
+
+// ---------------------------------------- Types -----------------------------
+// Ruta para obtener todos los tipos
+router.get("/types", async (req, res) => {
+  try {
+    let types = await Type.findAll();
+
+    // Si no hay tipos en la base de datos, obtenerlos de la API
+    if (types.length === 0) {
+      const response = await axios.get("https://pokeapi.co/api/v2/type");
+      console.log(response.data.results); // Ver si la respuesta se guarda correctamente
+      const apiTypes = response.data.results;
+      apiTypes.forEach(async (type) => {
+        const newType = new Type({ name: type.name });
+        await newType.save();
+        console.log(`Se ha guardado el tipo ${type.name} en la base de datos`); // Ver si el registro se guarda correctamente
+      });
+      types = await Type.findAll();
+    }
+    res.json(types);
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({ message: "error" });
   }
 });
 
