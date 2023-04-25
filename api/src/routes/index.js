@@ -101,4 +101,43 @@ router.get("/types", async (req, res) => {
   }
 });
 
+router.post("/pokemons", async (req, res) => {
+  let { name, img, life, attack, defense, speed, height, weight, types } =
+    req.body;
+
+  let pokemonCreated = await Pokemon.create({
+    name,
+    img,
+    life,
+    attack,
+    defense,
+    speed,
+    height,
+    weight,
+    createBD,
+  });
+
+  let typesDb = await Type.findAll({
+    where: { name: types },
+  });
+
+  pokemonCreated.addType(typesDb);
+  res.json("Successfully created Pokemon"); //Pokemon creado con éxito
+});
+
+//Se puede pasar por set pero siento que esta es más optima para mí.
+
+//Le puedo agregar un mensaje de error.
+
+router.get("/pokemons/:id", async (req, res) => {
+  const id = req.params.id;
+  const allPokemons = await getAllPokemons();
+  if (id) {
+    let pokemonID = await allPokemons.filter((el) => el.id == id);
+    pokemonID
+      ? res.status(200).json(pokemonID)
+      : res.status(404).send("Sorry, that Pokemon does not exist.");
+  }
+});
+
 module.exports = router;
