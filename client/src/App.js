@@ -5,7 +5,7 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <h1>Henry Pokemon</h1>
+        <h1>Pokemon App</h1>
       </div>
     </BrowserRouter>
   );

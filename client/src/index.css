@@ -1,5 +1,8 @@
 body {
-  background: url("https://images.wallpapersden.com/image/download/pokemon-unite-hd_bG5sa2aUmZqaraWkpJRnZWltrWZmamc.jpg");
+  background-image: url("https://images3.alphacoders.com/273/273289.jpg");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",

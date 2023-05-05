@@ -1,10 +1,10 @@
 import axios from "axios";
 
-export function getPokemons() {
+export function getPokemon() {
   return async function (dispatch) {
-    var json = await axios.get("http://localhost:3001/pokemons");
+    var json = await axios.get("http://localhost:3001/pokemon");
     return dispatch({
-      type: "GET_POKEMONS",
+      type: "GET_POKEMON",
       payload: json.data,
     });
   };

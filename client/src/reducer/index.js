@@ -1,13 +1,13 @@
 const initialState = {
-  pokemons: [], //¿ va dos puntos o = ?
+  pokemon: [],
 };
 
 function rootReducer(state = initialState, action) {
   switch (action.type) {
-    case "GET_POKEMONS":
+    case "GET_POKEMON":
       return {
-        ...state, //guarda el estado
-        pokemons: action.payload,
+        ...state,
+        pokemon: action.payload,
       };
   }
 }
