@@ -49,7 +49,7 @@ const getDbInfo = async () => {
   });
 };
 
-const getAllPokemons = async () => {
+const getAllPokemon = async () => {
   // Unifico los Pokemons de mi DB y mi API
   const apiInfo = await getApiInfo();
   const dbInfo = await getDbInfo();
@@ -57,24 +57,20 @@ const getAllPokemons = async () => {
   return infoTotal;
 };
 
-router.get("/pokemons", async (req, res) => {
+router.get("/pokemon", async (req, res) => {
   const name = req.query.name; // Busca nombre por Query
-  let pokemonsTotal = await getAllPokemons();
+  let pokemonTotal = await getAllPokemon();
   if (name) {
-    let pokemonName = await pokemonsTotal.filter((el) =>
+    let pokemonName = await pokemonTotal.filter((el) =>
       el.name.toLowerCase().includes(name.toLowerCase())
     ); // Busqueda mínuscula y mayúscula
     pokemonName.length
       ? res.status(200).send(pokemonName)
       : res.status(404).send("Sorry, that Pokemon does not exist"); // Pokemon no existe
   } else {
-    res.status(200).send(pokemonsTotal); // Todos
+    res.status(200).send(pokemonTotal); // Todos
   }
 });
-
-// ---------------------------------------- POST -----------------------------
-
-router.post("/pokemons", async (req, res) => {});
 
 // ---------------------------------------- Types -----------------------------
 // Ruta para obtener todos los tipos
@@ -101,7 +97,9 @@ router.get("/types", async (req, res) => {
   }
 });
 
-router.post("/pokemons", async (req, res) => {
+// ---------------------------------------- POST -----------------------------
+
+router.post("/pokemon", async (req, res) => {
   let { name, img, life, attack, defense, speed, height, weight, types } =
     req.body;
 
@@ -129,11 +127,11 @@ router.post("/pokemons", async (req, res) => {
 
 //Le puedo agregar un mensaje de error.
 
-router.get("/pokemons/:id", async (req, res) => {
+router.get("/pokemon/:id", async (req, res) => {
   const id = req.params.id;
-  const allPokemons = await getAllPokemons();
+  const allPokemon = await getAllPokemon();
   if (id) {
-    let pokemonID = await allPokemons.filter((el) => el.id == id);
+    let pokemonID = await allPokemon.filter((el) => el.id == id);
     pokemonID
       ? res.status(200).json(pokemonID)
       : res.status(404).send("Sorry, that Pokemon does not exist.");
